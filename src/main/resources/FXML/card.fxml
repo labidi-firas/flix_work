@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane onMousePressed="#click" prefHeight="248.0" prefWidth="289.0" stylesheets="@../values/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flix_work.controller.CardController">
+   <children>
+      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="248.0" prefWidth="329.0">
+         <content>
+            <VBox alignment="TOP_CENTER" prefHeight="246.0" prefWidth="292.0" spacing="10.0" stylesheets="@BackDesign.css">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label fx:id="jobTitleLabel" prefHeight="40.0" prefWidth="238.0" text="Software Engineer">
+                           <font>
+                              <Font name="Cambria" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="jobTypeLabel" prefHeight="49.0" prefWidth="101.0" text="Full-time"> <!-- Added jobTypeLabel -->
+                           <font>
+                              <Font name="Cambria Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="jobPriceLabel" prefHeight="49.0" prefWidth="91.0" text="\$100,000">
+                           <font>
+                              <Font name="Cambria Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <ImageView fx:id="jobImageView1" fitHeight="115.0" fitWidth="168.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Image/app-dev.jpg" />
+                     </image>
+                  </ImageView>
+                  <!-- Additional ImageViews removed for brevity -->
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+   <styleClass>
+      <String fx:value="job-item" />
+      <String fx:value="shadow" />
+   </styleClass>
+</AnchorPane>

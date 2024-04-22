@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="JobTable" prefHeight="600.0" prefWidth="1123.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flix_work.controller.JobController">
+
+    <children>
+        <AnchorPane layoutX="187.0" layoutY="50.0" prefHeight="500.0" prefWidth="937.0" styleClass="white-bg" stylesheets="@BackDesign.css">
+            <children>
+                <!-- Table View -->
+                <TableView fx:id="jobsTable" layoutX="-7.0" layoutY="-3.0" prefHeight="453.0" prefWidth="1058.0" styleClass="table-column" stylesheets="@BackDesign.css">
+                    <columns>
+                        <!-- ID Column -->
+                        <TableColumn fx:id="idCol" prefWidth="70.0" text="ID" />
+                        <!-- Job Title Column -->
+                        <TableColumn fx:id="titleCol" prefWidth="147.0" text="Job Title" />
+                        <!-- Job Type Column -->
+                        <TableColumn fx:id="jobTypeCol" prefWidth="136.0" text="Job Type" />
+                        <!-- Description Column -->
+                        <TableColumn fx:id="descriptionCol" prefWidth="220.0" text="Description" />
+                        <!-- Deadline Column -->
+                        <TableColumn fx:id="deadlineCol" prefWidth="134.0" text="Deadline" />
+                        <!-- Category Column -->
+                        <TableColumn fx:id="categoryCol" prefWidth="130.0" text="Category" />
+                        <!-- Actions Column -->
+                        <TableColumn fx:id="editCol" prefWidth="234.0" text="Actions" />
+                    </columns>
+                </TableView>
+                <!-- Add Button -->
+                <Button fx:id="btnAdd" layoutX="950.0" layoutY="463.0" mnemonicParsing="false" onAction="#getAddView" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Add" />
+                <!-- Refresh Button -->
+            </children>
+        </AnchorPane>
+        <VBox layoutX="-1.0" layoutY="47.0" prefHeight="554.0" prefWidth="187.0">
+            <children>
+                <AnchorPane prefHeight="593.0" prefWidth="187.0" styleClass="nav-form" stylesheets="@BackDesign.css">
+                    <children>
+                        <ImageView fitHeight="53.0" fitWidth="145.0" layoutX="21.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
+                            <image>
+                                <Image url="@../Image/logo-removebg-preview.png" />
+                            </image>
+                        </ImageView>
+      
+                      <!-- Category Button -->
+                      <Button fx:id="btnGoToCategory" layoutX="22.0" layoutY="171.0" mnemonicParsing="false" onAction="#handleGoToCategory" prefHeight="30.0" prefWidth="145.0" style="-fx-background-color: #808080; -fx-text-fill: white;" text="Category" />
+      
+                      <!-- Go to Front Button -->
+                      <Button fx:id="btnGoToFront" layoutX="21.0" layoutY="231.0" mnemonicParsing="false" onAction="#goToFront" prefHeight="30.0" prefWidth="145.0" style="-fx-background-color: #FF6347; -fx-text-fill: white;" text="Go to Front" />
+                    </children>
+                </AnchorPane>
+            </children>
+        </VBox>
+        <HBox layoutY="-3.0" prefHeight="53.0" prefWidth="1237.0">
+            <children>
+                <AnchorPane prefHeight="53.0" prefWidth="1250.0" styleClass="semi-top-form" stylesheets="@BackDesign.css">
+                    <children>
+                        <Text fill="#134d1b" layoutX="24.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Job Management System" wrappingWidth="210.482421875">
+                            <font>
+                                <Font name="Bodoni MT" size="18.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </AnchorPane>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>
