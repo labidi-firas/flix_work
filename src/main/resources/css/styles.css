@@ -1,0 +1,48 @@
+/* Style de base pour la liste des utilisateurs */
+.user-list {
+    padding: 0;
+    list-style-type: none;
+}
+
+/* Style des éléments de la liste */
+.user-item {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    background-color: #f9f9f9; /* Couleur de fond blanc */
+}
+
+/* Style pour les éléments de la liste au survol */
+.user-item:hover {
+    background-color: #d9edf7; /* Couleur de fond bleue claire au survol */
+}
+
+/* Style pour le nom de l'utilisateur */
+.user-name {
+    font-weight: bold;
+    color: #337ab7; /* Couleur bleue */
+}
+
+/* Style pour les détails supplémentaires de l'utilisateur */
+.user-details {
+    color: #666;
+}
+
+/* Style pour l'avatar de l'utilisateur */
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+/* Style pour le conteneur de la liste */
+.user-list-container {
+    width: 100%;
+    max-width: 600px; /* Ajustez la largeur selon vos besoins */
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff; /* Couleur de fond blanc */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

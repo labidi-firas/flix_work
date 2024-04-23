@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="554.0" prefWidth="882.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.UserController">
+   <children>
+      <VBox layoutX="10.0" layoutY="117.0" prefHeight="276.0" prefWidth="222.0" spacing="15.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="UserName">
+               <font>
+                  <Font name="Montserrat Medium" size="12.0" />
+               </font>
+               <effect>
+                  <Glow level="0.49" />
+               </effect>
+            </Text>
+            <TextField fx:id="tUsername" style="-fx-background-color: white;">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+               <effect>
+                  <ColorAdjust brightness="-0.06" contrast="-0.43" hue="0.87" saturation="0.71" />
+               </effect>
+               <font>
+                  <Font name="Montserrat SemiBold" size="12.0" />
+               </font>
+            </TextField>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email">
+               <font>
+                  <Font name="Montserrat Medium" size="12.0" />
+               </font>
+               <effect>
+                  <Glow level="0.42" />
+               </effect>
+            </Text>
+            <TextField fx:id="tEmail" style="-fx-background-color: white;">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+               <effect>
+                  <ColorAdjust brightness="-0.06" contrast="-0.43" hue="0.87" saturation="0.71" />
+               </effect>
+            </TextField>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Address">
+               <font>
+                  <Font name="Montserrat Medium" size="12.0" />
+               </font>
+               <effect>
+                  <Glow level="0.54" />
+               </effect>
+            </Text>
+            <TextField fx:id="tAdresse" style="-fx-background-color: white;">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+               <effect>
+                  <ColorAdjust brightness="-0.06" contrast="-0.43" hue="0.87" saturation="0.71" />
+               </effect>
+            </TextField>
+            <Text layoutX="10.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+               <font>
+                  <Font name="Montserrat Medium" size="12.0" />
+               </font>
+               <effect>
+                  <Glow level="0.54" />
+               </effect>
+            </Text>
+            <PasswordField fx:id="tPassword" style="-fx-background-color: white;">
+               <effect>
+                  <ColorAdjust brightness="-0.06" contrast="-0.43" hue="0.87" saturation="0.71" />
+               </effect></PasswordField>
+            <Text layoutX="10.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Role">
+               <font>
+                  <Font name="Montserrat Medium" size="12.0" />
+               </font>
+               <effect>
+                  <Glow level="0.54" />
+               </effect>
+            </Text>
+            <TextField fx:id="tRole" layoutX="10.0" layoutY="183.0" style="-fx-background-color: white;">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+               <effect>
+                  <ColorAdjust brightness="-0.06" contrast="-0.43" hue="0.87" saturation="0.71" />
+               </effect>
+            </TextField>
+         </children>
+      </VBox>
+
+      <TableView fx:id="table" layoutX="237.0" layoutY="129.0" onMouseClicked="#getData" prefHeight="276.0" prefWidth="630.0">
+        <columns>
+          <TableColumn fx:id="colId" prefWidth="36.0" text="Id" />
+          <TableColumn fx:id="colUsername" prefWidth="114.4000244140625" text="User Name" />
+            <TableColumn fx:id="colEmail" prefWidth="111.20001220703125" text="Email" />
+            <TableColumn fx:id="colAdress" prefWidth="83.199951171875" text="Address" />
+            <TableColumn fx:id="colPassword" prefWidth="104.79998779296875" text="Password" />
+           <TableColumn fx:id="colRole" prefWidth="87.2000732421875" text="Role">
+              <cellValueFactory>
+                 <PropertyValueFactory property="role" />
+              </cellValueFactory>
+           </TableColumn>
+            <TableColumn fx:id="colBanned" prefWidth="87.2000732421875" text="Banned">
+               <cellValueFactory>
+                  <PropertyValueFactory property="role" />
+               </cellValueFactory>
+            </TableColumn>
+        </columns>
+      </TableView>
+      <ButtonBar layoutX="272.0" layoutY="445.0" prefHeight="40.0" prefWidth="356.0">
+        <buttons>
+          <Button fx:id="btnSave" mnemonicParsing="false" onAction="#createUser" style="-fx-background-color: dodgerblue;" text="Save" textFill="#f2ecec" />
+            <Button fx:id="btnUpdate" layoutX="369.0" layoutY="17.0" mnemonicParsing="false" onAction="#updateUser" style="-fx-background-color: dodgerblue;" text="Update" textFill="WHITE" />
+            <Button fx:id="btnDelete" layoutX="284.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteUser" style="-fx-background-color: red;" text="Delete" textFill="WHITE" />
+            <Button fx:id="btnClear" layoutX="198.0" layoutY="17.0" mnemonicParsing="false" onAction="#clearField" style="-fx-background-color: dodgerblue;" text="Clear" textFill="#ece5e5" />
+            <Button fx:id="btnBan" layoutX="205.0" layoutY="17.0" mnemonicParsing="false" onAction="#BanUser" style="-fx-background-color: green;" text="Ban" textFill="WHITE">
+               <effect>
+                  <ColorAdjust brightness="0.59" contrast="0.48" hue="0.56" saturation="-0.49" />
+               </effect></Button>
+            <Button fx:id="btnUnban" layoutX="116.0" layoutY="17.0" mnemonicParsing="false" onAction="#unBanUser" style="-fx-background-color: green;" text="Unban" textFill="WHITE">
+               <effect>
+                  <ColorAdjust brightness="0.59" contrast="0.48" hue="0.56" saturation="-0.49" />
+               </effect>
+            </Button>
+        </buttons>
+      </ButtonBar>
+
+      <ImageView fitHeight="40.0" fitWidth="75.0" layoutX="368.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/logo.png" />
+         </image>
+      </ImageView>
+      <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="237.0" layoutY="38.0" prefHeight="34.0" prefWidth="412.0" style="-fx-background-color: #071e7e;" text="Liste des utilisateurs" textFill="WHITE">
+         <font>
+            <Font name="Montserrat Regular" size="28.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnSave1" layoutX="697.0" layoutY="43.0" mnemonicParsing="false" onAction="#LogOut" prefHeight="26.0" prefWidth="75.0" style="-fx-background-color: #071e7e;" text="Logout" textFill="#f2ecec" />
+      <ImageView fitHeight="128.0" fitWidth="132.0" layoutX="38.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/9322098.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="26.0" fitWidth="27.0" layoutX="322.0" layoutY="419.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/69539.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="26.0" fitWidth="27.0" layoutX="405.0" layoutY="419.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/5278663.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="26.0" fitWidth="27.0" layoutX="489.0" layoutY="420.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/1345874.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="26.0" fitWidth="27.0" layoutX="574.0" layoutY="420.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/téléchargement.png" />
+         </image>
+      </ImageView>
+      <HBox layoutX="239.0" layoutY="96.0" prefHeight="34.0" prefWidth="312.0">
+         <children>
+            <TextField fx:id="searchField" onAction="#SearchUser" prefHeight="26.0" prefWidth="246.0" promptText="Recherche" />
+            <Button fx:id="btnClearSearch" mnemonicParsing="false" onAction="#ClearSearch" style="-fx-background-color: blue;" text="Clear" textFill="WHITE" />
+         </children>
+      </HBox>
+      <ImageView fitHeight="26.0" fitWidth="27.0" layoutX="661.0" layoutY="420.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/709489.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="26.0" fitWidth="27.0" layoutX="721.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/248928.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
