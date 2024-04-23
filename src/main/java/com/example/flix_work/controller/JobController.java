@@ -12,10 +12,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -50,6 +48,9 @@ public class JobController implements Initializable {
     private TableColumn<Job, String> jobTypeCol;
     @FXML
     private TableColumn<Job, String> editCol;
+
+    @FXML
+    private TextField search;
 
     String query = null;
     Connection connection = null;
@@ -246,6 +247,48 @@ public class JobController implements Initializable {
             refreshTable();
         } catch (SQLException ex) {
             Logger.getLogger(JobController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+
+
+
+    // Add an event handler to the search TextField
+    @FXML
+    private void handleSearch(KeyEvent event) {
+        String searchText = search.getText().trim();
+        if (!searchText.isEmpty()) {
+            try {
+                jobList.clear();
+
+                // Update the SQL query to include search criteria for title, description, type, category name, and category ID
+                query = "SELECT j.id, j.title, j.description, j.type, j.deadline, j.salary, c.category_name " +
+                        "FROM job j " +
+                        "JOIN jobs_category c ON j.category_id = c.id " +
+                        "WHERE j.title LIKE ? OR j.description LIKE ? OR j.type LIKE ? OR c.category_name LIKE ? OR CAST(j.id AS CHAR) LIKE ?";
+                preparedStatement = connection.prepareStatement(query);
+                for (int i = 1; i <= 5; i++) {
+                    preparedStatement.setString(i, "%" + searchText + "%");
+                }
+                resultSet = preparedStatement.executeQuery();
+
+                while (resultSet.next()) {
+                    jobList.add(new Job(
+                            resultSet.getInt("id"),
+                            resultSet.getString("title"),
+                            resultSet.getString("type"),
+                            resultSet.getString("description"),
+                            resultSet.getDate("deadline").toLocalDate(),
+                            resultSet.getDouble("salary"),
+                            resultSet.getString("category_name")
+                    ));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(JobController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            // If search text is empty, refresh the table to show all jobs
+            refreshTable();
         }
     }
 

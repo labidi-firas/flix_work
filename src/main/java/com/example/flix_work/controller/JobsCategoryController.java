@@ -8,7 +8,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+
 
 import java.net.URL;
 import java.sql.Connection;
@@ -23,6 +25,8 @@ import java.util.logging.Logger;
 
 public class JobsCategoryController implements Initializable {
 
+    @FXML
+    private TextField search;
     @FXML
     private TableView<JobsCategory> categoryTable;
     @FXML
@@ -142,6 +146,7 @@ public class JobsCategoryController implements Initializable {
         }
     }
 
+
     private void handleEditCategory(JobsCategory selectedCategory) {
         TextInputDialog dialog = new TextInputDialog(selectedCategory.getCategoryName());
         dialog.setTitle("Edit Category");
@@ -211,5 +216,25 @@ public class JobsCategoryController implements Initializable {
             }
         }
     }
+
+    @FXML
+    private void handleSearch(KeyEvent event) {
+        String searchText = search.getText().trim();
+        if (!searchText.isEmpty()) {
+            ObservableList<JobsCategory> filteredList = FXCollections.observableArrayList();
+            for (JobsCategory category : categoryList) {
+                // Check if category name or category ID contains the search text
+                if (String.valueOf(category.getId()).contains(searchText) ||
+                        category.getCategoryName().toLowerCase().contains(searchText.toLowerCase())) {
+                    filteredList.add(category);
+                }
+            }
+            categoryTable.setItems(filteredList);
+        } else {
+            // If search text is empty, show all categories
+            categoryTable.setItems(categoryList);
+        }
+    }
+
 
 }
