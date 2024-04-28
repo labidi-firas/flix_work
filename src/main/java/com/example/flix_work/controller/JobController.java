@@ -4,6 +4,8 @@ import com.example.flix_work.dao.DbConnect;
 import com.example.flix_work.entity.Job;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,13 +14,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
+import javafx.util.Pair;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -26,17 +31,33 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 public class JobController implements Initializable {
+
+
+
+    @FXML
+    private Button btnDownload;
+
+
+    @FXML
+    private TableView<Job> tableView;
+
+    @FXML
+    private Button btnGoToChart;
+
+
+    @FXML
+    private PieChart jobCategoryChart;
 
     @FXML
     private TableView<Job> jobsTable;
     @FXML
-    private TableColumn<Job, Long> idCol;
-    @FXML
+
     private TableColumn<Job, String> titleCol;
     @FXML
     private TableColumn<Job, LocalDate> deadlineCol;
@@ -48,6 +69,14 @@ public class JobController implements Initializable {
     private TableColumn<Job, String> jobTypeCol;
     @FXML
     private TableColumn<Job, String> editCol;
+    @FXML
+    private TableColumn<Job, Integer> idCol;
+
+
+
+    @FXML
+    private PieChart pieChart;
+
 
     @FXML
     private TextField search;
@@ -61,11 +90,20 @@ public class JobController implements Initializable {
     ObservableList<Job> jobList = FXCollections.observableArrayList();
 
     @Override
+
     public void initialize(URL url, ResourceBundle rb) {
+        btnDownload.setOnAction(this::downloadAllJobs);
+        btnGoToChart.setOnAction(event -> goToChart());
+        pieChart = new PieChart();
         connection = DbConnect.getConnect();
         refreshTable();
+        idCol.setCellValueFactory(cellData -> {
+            Job job = cellData.getValue();
+            Long jobId = job.getId();
+            ObservableValue<Integer> observableValue = new SimpleObjectProperty<>(jobId.intValue());
+            return observableValue;
+        });
 
-        idCol.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         titleCol.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
         categoryCol.setCellValueFactory(cellData -> cellData.getValue().categoryNameProperty());
         descriptionCol.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
@@ -150,6 +188,21 @@ public class JobController implements Initializable {
         deleteExpiredJobsTimeline.play();
     }
 
+    // Add method to create pie chart
+
+
+    private void goToChart() {
+        // Get the data for the chart from the database
+        ObservableList<PieChart.Data> pieChartData = fetchDataFromDatabase();
+
+        // Set the data for the PieChart
+        jobCategoryChart.setData(pieChartData);
+    }
+
+
+
+
+    // Call createPieChart() method in refreshTable() method
     public void refreshTable() {
         try {
             jobList.clear();
@@ -171,10 +224,60 @@ public class JobController implements Initializable {
                         resultSet.getString("category_name")
                 ));
             }
+
+            // Create PieChart after updating jobList
+            createPieChart();
         } catch (SQLException ex) {
             Logger.getLogger(JobController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    @FXML
+    private void createPieChart() {
+        ObservableList<PieChart.Data> pieChartData = fetchDataFromDatabase();
+
+        jobCategoryChart.setData(pieChartData);
+        jobCategoryChart.setLabelsVisible(true); // Show labels with percentages
+    }
+
+    @FXML
+    private ObservableList<PieChart.Data> fetchDataFromDatabase() {
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+
+        try (Connection connection = DbConnect.getConnect()) {
+            String query = "SELECT c.category_name, COUNT(*) AS count " +
+                    "FROM job j " +
+                    "JOIN jobs_category c ON j.category_id = c.id " +
+                    "GROUP BY c.category_name";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            // Récupération des données dans une liste
+            List<Pair<String, Integer>> data = new ArrayList<>();
+            int totalJobs = 0;
+            while (resultSet.next()) {
+                String category = resultSet.getString("category_name");
+                int count = resultSet.getInt("count");
+                data.add(new Pair<>(category, count));
+                totalJobs += count;
+            }
+
+            // Calcul des pourcentages et création des données pour le PieChart
+            for (Pair<String, Integer> entry : data) {
+                String category = entry.getKey();
+                int count = entry.getValue();
+                double percentage = ((double) count / totalJobs) * 100;
+                pieChartData.add(new PieChart.Data(category + " (" + String.format("%.2f", percentage) + "%)", count));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(JobController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return pieChartData;
+    }
+
+
 
     @FXML
     private void close(javafx.scene.input.MouseEvent event) {
@@ -237,6 +340,7 @@ public class JobController implements Initializable {
             Logger.getLogger(JobController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    @FXML
     private void deleteExpiredJobs() {
         try {
             String deleteQuery = "DELETE FROM job WHERE deadline < ?";
@@ -293,4 +397,71 @@ public class JobController implements Initializable {
     }
 
 
+
+
+
+    @FXML
+    private void goToChart(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/chartjob.fxml"));
+            Parent parent = loader.load();
+
+            Scene scene = new Scene(parent);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.initStyle(StageStyle.UTILITY);
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(JobController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+
+    @FXML
+    private void downloadAllJobs(ActionEvent event) {
+        try {
+            // Open a FileWriter to write to a file named "jobs.csv"
+            FileWriter writer = new FileWriter("jobs.csv");
+
+            // Write the header line to the CSV file
+            writer.append("Title,Deadline,Category,Description,Job Type\n");
+
+            // Iterate through the jobList and write each job's information to the CSV file
+            for (Job job : jobList) {
+                writer.append(job.getTitle())
+                        .append(",")
+                        .append(job.getDeadline().toString())
+                        .append(",")
+                        .append(job.getCategoryName())
+                        .append(",")
+                        .append(job.getDescription())
+                        .append(",")
+                        .append(job.getJobType())
+                        .append("\n");
+            }
+
+            // Close the FileWriter
+            writer.close();
+
+            // Notify the user that the download is complete
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Download Complete");
+            alert.setHeaderText(null);
+            alert.setContentText("All jobs have been downloaded to jobs.csv");
+            alert.showAndWait();
+        } catch (IOException ex) {
+            // Handle any IOException that occurs during file writing
+            Logger.getLogger(JobController.class.getName()).log(Level.SEVERE, null, ex);
+            // Notify the user about the error
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("An error occurred while downloading jobs.");
+            alert.showAndWait();
+        }
+    }
+
+
+
 }
+

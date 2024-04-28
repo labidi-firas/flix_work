@@ -13,4 +13,6 @@ module com.example.flix_work {
     opens com.example.flix_work.entity to javafx.fxml;
     exports com.example.flix_work.dao;
     opens com.example.flix_work.dao to javafx.fxml;
+
+
 }

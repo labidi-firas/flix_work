@@ -49,3 +49,38 @@
     -fx-background-color: #FFFFFF;
     -fx-background-radius: 30;
 }
+/* styles.css */
+.chart-pie {
+    -fx-font-size: 12px;
+}
+
+.chart-legend {
+    -fx-font-size: 12px;
+}
+
+.chart-title {
+    -fx-font-size: 16px;
+}
+
+.chart-pie-label {
+    -fx-font-size: 10px;
+}
+
+/* Couleurs personnalisées pour les tranches de PieChart */
+.default-color0.chart-pie {
+    -fx-pie-color: #1f77b4; /* bleu */
+}
+
+.default-color1.chart-pie {
+    -fx-pie-color: #ff7f0e; /* orange */
+}
+
+.default-color2.chart-pie {
+    -fx-pie-color: #2ca02c; /* vert */
+}
+
+.default-color3.chart-pie {
+    -fx-pie-color: #d62728; /* rouge */
+}
+
+/* Ajoutez plus de couleurs si nécessaire */
