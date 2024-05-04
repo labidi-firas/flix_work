@@ -15,10 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.apache.poi.ss.usermodel.Row;
@@ -39,6 +36,10 @@ import java.util.ResourceBundle;
 
 public class TrainingCategoryController implements Initializable {
 
+    public Button btnsave;
+    public Button btnupdate;
+    public Button btnclear;
+    public Button btndelete;
     @FXML
     private TextField tcategory;
 
@@ -168,12 +169,25 @@ public class TrainingCategoryController implements Initializable {
             return;
         }
 
+        // Récupérer la catégorie sélectionnée
+        TrainingCategory selectedCategory = tableview.getSelectionModel().getSelectedItem();
+        if (selectedCategory == null) {
+            showAlert("Erreur", "Aucune catégorie sélectionnée.");
+            return;
+        }
+
+        // Vérifier si le nom de la catégorie a été modifié
+        if (categoryName.equals(selectedCategory.getCategory_name())) {
+            showAlert("Information", "Le nom de la catégorie n'a pas été modifié.");
+            return;
+        }
+
         String update = "UPDATE training_category SET category_name = ? WHERE id = ?";
         try {
             con = DBConnexion.getCon();
             st = con.prepareStatement(update);
             st.setString(1, categoryName);
-            st.setInt(2, id);
+            st.setInt(2, selectedCategory.getId());
             st.executeUpdate();
             showTrainingCategories();
             clear();

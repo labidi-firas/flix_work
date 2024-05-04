@@ -51,8 +51,8 @@
             <Button fx:id="btndelete" layoutX="659.0" layoutY="21.0" mnemonicParsing="false" onAction="#deleteTraining" text="delete" />
         </buttons>
       </ButtonBar>
-      <Button fx:id="btncat_tra" layoutX="799.0" layoutY="591.0" mnemonicParsing="false" onAction="#gotocat" prefHeight="35.0" prefWidth="143.0" text="Cat_Tra" />
-      <Button layoutX="1171.0" layoutY="225.0" mnemonicParsing="false" onAction="#generatePDF" prefHeight="34.0" prefWidth="183.0" text="PDF" />
-      <Button layoutX="1171.0" layoutY="316.0" mnemonicParsing="false" onAction="#generateEXEL" text="EXEL" />
+      <Button fx:id="btncat_tra" layoutX="409.0" layoutY="368.0" mnemonicParsing="false" onAction="#gotocat" prefHeight="35.0" prefWidth="143.0" text="Cat_Tra" />
+      <Button layoutX="409.0" layoutY="162.0" mnemonicParsing="false" onAction="#generatePDF" prefHeight="34.0" prefWidth="183.0" text="PDF" />
+      <Button layoutX="409.0" layoutY="265.0" mnemonicParsing="false" onAction="#generateEXEL" text="EXEL" />
    </children>
 </AnchorPane>
