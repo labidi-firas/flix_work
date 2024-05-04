@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="867.0" prefWidth="1297.0" styleClass="form_container" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestion_formation.TrainingController">
+   <children>
+      <VBox layoutX="14.0" layoutY="315.0" prefHeight="400.0" prefWidth="300.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="110.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="title" />
+            <TextField fx:id="ttitle" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="description" />
+            <TextField fx:id="tdesc" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="start_date" />
+            <TextField fx:id="tsd" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="end_date" />
+            <TextField fx:id="ted" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="number_of_places" />
+            <TextField fx:id="tnbp" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="category_id" />
+            <TextField fx:id="tcat" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="trainer_id" />
+            <TextField fx:id="ttrain" />
+         </children>
+      </VBox>
+      <TableView fx:id="tableview" layoutX="538.0" layoutY="110.0" onMouseClicked="#getData" prefHeight="343.0" prefWidth="620.0" AnchorPane.rightAnchor="139.0" AnchorPane.topAnchor="110.0">
+        <columns>
+          <TableColumn fx:id="colid" prefWidth="55.0" text="ID" />
+          <TableColumn fx:id="coltit" prefWidth="81.0" text="TITLE" />
+            <TableColumn fx:id="coldesc" prefWidth="89.0" text="DESCRIPTION" />
+            <TableColumn fx:id="colstart" prefWidth="75.0" text="START_DATE" />
+            <TableColumn fx:id="colend" prefWidth="75.0" text="END_DATE" />
+            <TableColumn fx:id="coltrainer" prefWidth="75.0" text="TRAINER_ID" />
+            <TableColumn fx:id="colcat" prefWidth="75.0" text="CATEGORY_ID" />
+            <TableColumn fx:id="colnum" minWidth="0.0" prefWidth="91.0" text="NUMBER_OF_PLACES" />
+        </columns>
+      </TableView>
+      <Label alignment="CENTER" layoutX="621.0" layoutY="44.0" prefHeight="35.0" prefWidth="443.0" styleClass="title" text="TRAININGS" />
+      <ButtonBar layoutX="621.0" layoutY="508.0" prefHeight="46.0" prefWidth="455.0">
+        <buttons>
+          <Button fx:id="btnsave" mnemonicParsing="false" onAction="#creatTraining" text="save" />
+            <Button fx:id="btnupdate" layoutX="135.0" layoutY="18.0" mnemonicParsing="false" onAction="#updateTraining" prefWidth="210.0" text="update" />
+            <Button fx:id="btnclear" layoutX="439.0" layoutY="21.0" mnemonicParsing="false" onAction="#clearField" text="clear" />
+            <Button fx:id="btndelete" layoutX="659.0" layoutY="21.0" mnemonicParsing="false" onAction="#deleteTraining" text="delete" />
+        </buttons>
+      </ButtonBar>
+      <Button fx:id="btncat_tra" layoutX="799.0" layoutY="591.0" mnemonicParsing="false" onAction="#gotocat" prefHeight="35.0" prefWidth="143.0" text="Cat_Tra" />
+      <Button layoutX="1171.0" layoutY="225.0" mnemonicParsing="false" onAction="#generatePDF" prefHeight="34.0" prefWidth="183.0" text="PDF" />
+      <Button layoutX="1171.0" layoutY="316.0" mnemonicParsing="false" onAction="#generateEXEL" text="EXEL" />
+   </children>
+</AnchorPane>
